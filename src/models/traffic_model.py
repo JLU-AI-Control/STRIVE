@@ -7,6 +7,7 @@ import itertools
 import numpy as np
 
 import torch
+torch.cuda.set_device(2)
 from torch import nn
 from torch.distributions import Normal
 

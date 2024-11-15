@@ -147,6 +147,11 @@ cython_debug/
 runs/
 storage/
 *.mp4
-#*.png
+*.png
+*.bin
+*.zip
+*.pcd
+*.tgz
+*.json
 
 *map_storage/

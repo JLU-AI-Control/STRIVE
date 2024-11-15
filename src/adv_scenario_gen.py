@@ -29,6 +29,8 @@ from utils.sol_optim import run_find_solution_optim, compute_sol_success
 from utils.init_optim import run_init_optim
 from planners.planner import PlannerConfig
 from utils.config import get_parser, add_base_args
+torch.cuda.set_device(2)
+
 
 def parse_cfg():
     parser = get_parser('Adversarial scenario generation')
@@ -320,7 +322,7 @@ def run_one_epoch(data_loader, batch_size, model, map_env, device, out_path, los
                                                                     )
                     bvalid.append(np.sum(init_hardcode_coll) == 0)
 
-                bvalid = np.array(bvalid, dtype=np.bool)
+                bvalid = np.array(bvalid, dtype=bool)
                 if np.sum(bvalid) < B:
                     Logger.log('Planner already caused collision after init, removing from batch...')
                     if np.sum(bvalid) == 0:
@@ -331,7 +333,7 @@ def run_one_epoch(data_loader, batch_size, model, map_env, device, out_path, los
                     map_idx = map_idx[bvalid]
                     cur_batch_i = [bi for b, bi in enumerate(cur_batch_i) if bvalid[b]]
 
-                    avalid = np.zeros((NA), dtype=np.bool) # which agents are part of new graphs
+                    avalid = np.zeros((NA), dtype=bool) # which agents are part of new graphs
                     for b in range(B):
                         if bvalid[b]:
                             avalid[scene_graph.ptr[b]:scene_graph.ptr[b+1]] = True
